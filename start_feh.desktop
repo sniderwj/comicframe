@@ -1,0 +1,4 @@
+[Desktop Entry]
+Name=feh_slideshow
+Exec=/Frame/cronrun.sh
+Type=application
