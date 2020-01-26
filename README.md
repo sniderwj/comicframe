@@ -15,7 +15,7 @@ I liked the idea of a RPi powered frame where I could upload the scans of my com
 ## Needed applications
 1. Python 3
 2. feh
-3. Comic Collectors
+3. Comic Collectorz
 4. Dropbox (optional)
 5. Dropbox Uploader (optional)
   * https://github.com/andreafabrizi/Dropbox-Uploader
