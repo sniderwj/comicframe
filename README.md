@@ -12,12 +12,12 @@ I liked the idea of a RPi powered frame where I could upload the scans of my com
 3. Launch a site that can set filters, changing the images shown
 4. Use Dropbox to copy images and Comic Collectorz export automatically
 
-## Needed applications
+## Requirements / Used Products
 1. Python 3
 2. feh
 3. Comic Collectorz
-4. Bootstrap CSS
-5. JQuery
+4. Bootstrap CSS (pulling CDN version)
+5. JQuery (pulling CDN version)
 4. Dropbox (optional)
 5. Dropbox Uploader (optional)
   * https://github.com/andreafabrizi/Dropbox-Uploader
@@ -31,10 +31,12 @@ I liked the idea of a RPi powered frame where I could upload the scans of my com
     1. Read the Comic Collectorz export and build a list of comics, image names, and filter information
        * Filters are: Series, Comic Age, Publisher, and Creators
     2. Initially the text file will have all image file names
-    3. Launches a web site @ http://<ipaddress>:5000
+    3. Launches a web site @ http://ipaddress:5000
 3. The website will:
-    1. Select filters
-    2. When the filter is changed the corresponding file names are written into the text file.
+    1. Give the user a list of filters to select
+    2. Selecting a filter category will let you search and select a filter
+    3. When the filter is changed the corresponding file names are written into the text file.
+    4. feh will eventually reload the text file and start displaying the new set of images.
 
 # Setup
 1. In Comic Collectorz run *File --> Export To --> XML* and place in a path in your Dropbox folder.
