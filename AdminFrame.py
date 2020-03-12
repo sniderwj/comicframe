@@ -4,7 +4,6 @@ import config
 from flask import Flask, redirect
 import html
 
-
 # Variables
 
 comicCollectorDataPath: str = config.comicFilePath
@@ -16,16 +15,21 @@ publisherFilter = []
 ageFilter = []
 creatorsFilter = []
 comicCollection = []
+seriesGroupFilter = []
 
 webpageEnd: str = '''
 </div>
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" ''' \
+                  + '''integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" ''' \
+                  + '''crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" ''' \
+                  + '''integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" ''' \
+                  + '''crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" ''' \
+                  + '''integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" ''' \
+                  + '''crossorigin="anonymous"></script>
 <script>
-
-    function myFunction() {
+    function searchBarFilter() {
         var input, filter, ul, li, a, i, txtValue;
         input = document.getElementById("myInput");
         filter = input.value.toUpperCase();
@@ -41,7 +45,6 @@ webpageEnd: str = '''
             }
         }
     }
-
 </script>
 </body>
 '''
@@ -65,44 +68,65 @@ webpage = webpageBody
 
 def build_index_links():
     indexpage = '''<h1 class='text-white'>Comic Frame Filter</h1>'''
-    indexpage += '<h2 class=\'text-white\'>Current Image Filter: <b>' + displayImageFilter[0] + ':' + displayImageFilter[1] + '</b></h2>'
+    indexpage += '<h2 class=\'text-white\'>Current Image Filter</h2>' + \
+                 '<h3 class=\'text-white\'>Category: <b>' + displayImageFilter[0].capitalize() + '</b></h3>' + \
+                 '<h3 class=\'text-white\'>Value: <b>' + displayImageFilter[1]() + '</b></h3>'
     indexpage += '''<ul class='list-group'>'''
-    indexpage += '''<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' href='publisher'>Publishers</a></li>'''
-    indexpage += '''<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' href='age'>Comic Age</a></li>'''
-    indexpage += '''<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' href='series'>Series</a></li>'''
-    indexpage += '''<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' href='creators'>Creators</a></li>'''
+    indexpage += '''<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' ''' + \
+                 '''href='seriesgroup'>Series Group</a></li>'''
+    indexpage += '''<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' ''' + \
+                 '''href='series'>Series</a></li>'''
+    indexpage += '''<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' ''' + \
+                 '''href='creators'>Creators</a></li>'''
+    indexpage += '''<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' ''' + \
+                 '''href='publisher'>Publishers</a></li>'''
+    indexpage += '''<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' ''' + \
+                 '''href='age'>Comic Age</a></li>'''
+    indexpage += '''<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' ''' + \
+                 '''href='resetFilter'>Reset Filter</a></li>'''
     indexpage += '</ul>'
 
     return indexpage
 
 
 def build_webpage_links(selected_filter):
-    links = '''<input type="text" class="form-control" id="myInput" onkeyup="myFunction()" placeholder="Search for filters..">'''
+    links = '''<input type="text" class="form-control" id="myInput" onkeyup="searchBarFilter()" ''' \
+            + '''placeholder="Search for filters..">'''
     if selected_filter == 'publisher':
         links = '''<h1>Publishers</h1><ul id="myUL" class='list-group'>''' + links
         for publisher in publisherFilter:
-            links += "<li class='list-group-item'><a class='btn btn-primary mw-100 w-100'  href='publisher/" + html.escape(publisher) + "'>" + publisher + "</a></li>"
+            links += "<li class='list-group-item'><a class='btn btn-primary mw-100 w-100'  href='publisher/" \
+                     + html.escape(publisher) + "'>" + publisher + "</a></li>"
         links += "</ul>"
     elif selected_filter == 'age':
-        links = '''<h1>Comic Age</h1><ul id="myUL" class='list-group'>''' + links
+        links = '''<h1>Comic Book Ages</h1><ul id="myUL" class='list-group'>''' + links
         for age in ageFilter:
-            links += "<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' href='age/" + html.escape(age) + "'>" + age + "</a></li>"
+            links += "<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' href='age/" \
+                     + html.escape(age) + "'>" + age + "</a></li>"
         links += "</ul>"
     elif selected_filter == 'series':
         links = '''<h1>Series</h1><ul id="myUL" class='list-group'>''' + links
         for series in seriesFilter:
-            links += "<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' href='series/" + html.escape(series) + "'>" + series + "</a></li>"
+            links += "<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' href='series/" \
+                     + html.escape(series) + "'>" + series + "</a></li>"
         links += "</ul>"
     elif selected_filter == 'creators':
-        links = '''<h1>Series</h1><ul id="myUL" class='list-group'>''' + links
+        links = '''<h1>Creators</h1><ul id="myUL" class='list-group'>''' + links
         for creators in creatorsFilter:
-            links += "<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' href='creators/" + html.escape(creators) + "'>" + creators + "</a></li>"
+            links += "<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' href='creators/" \
+                     + html.escape(creators) + "'>" + creators + "</a></li>"
         links += "</ul>"
+    elif selected_filter == 'seriesgroup':
+        links = '''<h1>Series Groups</h1><ul id="myUL" class='list-group'>''' + links
+        for seriesGroup in seriesGroupFilter:
+            links += "<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' href='seriesgroup/" \
+                     + html.escape(seriesGroup) + "'>" + seriesGroup + "</a></li>"
+        links += "</ul>"
+
     return links
 
 
 def refresh_display_file(image_filter):
-
     global comicCollection
     comicCollection = get_comic_collection()
     file_text = ""
@@ -141,6 +165,7 @@ def get_comic_collection() -> list:
                 comic_info["seriesgroup"] = info.find("displayname").text
             elif info.tag == "mainsection":
                 comic_info["series"] = info.find("series/displayname").text
+
         collection_array.append(comic_info)
     return collection_array
 
@@ -151,6 +176,9 @@ def get_display_filters(comic_collection: list):
             if filter_item == "series":
                 if value not in seriesFilter:
                     seriesFilter.append(value)
+            elif filter_item == "seriesgroup":
+                if value not in seriesGroupFilter:
+                    seriesGroupFilter.append(value)
             elif filter_item == "publisher":
                 if value not in publisherFilter:
                     publisherFilter.append(value)
@@ -165,12 +193,14 @@ def get_display_filters(comic_collection: list):
     publisherFilter.sort()
     ageFilter.sort()
     creatorsFilter.sort()
+    seriesGroupFilter.sort()
 
 
 def main():
     # Get Comic Collection
-    comic_collection = get_comic_collection()
-    get_display_filters(comic_collection)
+    global comicCollection
+    comicCollection = get_comic_collection()
+    get_display_filters(comicCollection)
 
     global displayImageFilter
     refresh_display_file(displayImageFilter)
@@ -184,6 +214,9 @@ def main():
 
     @app.route('/<newfilter>')
     def display_filter(newfilter):
+        global comicCollection
+        comicCollection = get_comic_collection()
+        get_display_filters(comicCollection)
         return webpage + build_webpage_links(newfilter) + webpageEnd
 
     @app.route('/<newfilter>/<value>')
@@ -191,7 +224,14 @@ def main():
         global displayImageFilter
         displayImageFilter = (newfilter, html.unescape(value))
         refresh_display_file(displayImageFilter)
-        return redirect('/',)
+        return redirect('/', )
+
+    @app.route('/resetFilter')
+    def reset_filter():
+        global displayImageFilter
+        displayImageFilter = ("all", "all")
+        refresh_display_file(displayImageFilter)
+        return redirect('/', )
 
     app.run(debug=True, host='0.0.0.0')
 
