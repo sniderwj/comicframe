@@ -70,7 +70,7 @@ def build_index_links():
     indexpage = '''<h1 class='text-white'>Comic Frame Filter</h1>'''
     indexpage += '<h2 class=\'text-white\'>Current Image Filter</h2>' + \
                  '<h3 class=\'text-white\'>Category: <b>' + displayImageFilter[0].capitalize() + '</b></h3>' + \
-                 '<h3 class=\'text-white\'>Value: <b>' + displayImageFilter[1]() + '</b></h3>'
+                 '<h3 class=\'text-white\'>Value: <b>' + displayImageFilter[1] + '</b></h3>'
     indexpage += '''<ul class='list-group'>'''
     indexpage += '''<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' ''' + \
                  '''href='seriesgroup'>Series Group</a></li>'''
