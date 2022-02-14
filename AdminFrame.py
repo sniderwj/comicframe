@@ -228,7 +228,7 @@ def main():
         refresh_display_file(displayImageFilter)
         return redirect('/', )
 
-    @app.route('rebuildFilter')
+    @app.route('/rebuildFilter')
     def rebuild_filter():
         global displayImageFilter
         refresh_display_file(displayImageFilter)
