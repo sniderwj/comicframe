@@ -1,10 +1,11 @@
-import os
-import xml.etree.ElementTree as XMLTree
-from typing import List, Tuple, Any
-import config
-from flask import Flask, redirect
 import html
+import os
+from os.path import exists
 import re
+import xml.etree.ElementTree as XMLTree
+from typing import List
+from flask import Flask, redirect
+import config
 
 # Variables
 comicCollection: List
@@ -21,7 +22,7 @@ filterList = [("Series Group", "seriesgroup", []),
               ("Location", "location", [])]
 
 webpageEnd: str = '''
-</div>
+ </div>
 <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" ''' \
  + '''integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" ''' \
  + '''crossorigin="anonymous"></script>
@@ -61,9 +62,7 @@ webpageBody: str = '''
 <link rel='stylesheet'  href='static/css/bootstrap.min.css' />
 </head>
 <body>
-
 <div class='container-sm'>
-  
 '''
 
 webpage = webpageBody
@@ -87,6 +86,8 @@ def build_index_links():
                      "href='" + filterItem[1] + "'>" + filterItem[0] + "</a></li>"
     index_page += '''<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' ''' + \
                   '''href='resetFilter'>Reset Filter</a></li>'''
+    index_page += '''<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' ''' + \
+                  '''href='rebuildFilter'>Rebuild Filter</a></li>'''
     index_page += '</ul>'
     return index_page
 
@@ -109,12 +110,12 @@ def refresh_display_file(image_filter):
     file_text = ""
     if image_filter[0] == "all":
         for comic in comicCollection:
-            if "coverfront" in comic:
+            if "coverfront" in comic and exists(os.getcwd() + "/" + config.sourceImagePath + "/" + comic['coverfront']):
                 file_text += os.getcwd() + "/" + config.sourceImagePath + "/" + comic['coverfront'] + '\n'
     else:
         for comic in comicCollection:
             if str(comic.get(image_filter[0])) == image_filter[1]:
-                if "coverfront" in comic:
+                if "coverfront" in comic and exists(os.getcwd() + "/" + config.sourceImagePath + "/" + comic['coverfront']):
                     file_text += os.getcwd() + "/" + config.sourceImagePath + "/" + comic['coverfront'] + '\n'
     f = open(config.imageFilePath, 'w')
     f.write(file_text)
@@ -226,6 +227,12 @@ def main():
         displayImageFilter = ("all", "all")
         refresh_display_file(displayImageFilter)
         return redirect('/', )
+
+    @app.route('rebuildFilter')
+    def rebuild_filter():
+        global displayImageFilter
+        refresh_display_file(displayImageFilter)
+        return redirect('/')
 
     @app.route('/debug')
     def debug_route():
