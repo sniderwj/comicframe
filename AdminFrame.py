@@ -63,7 +63,7 @@ webpageBody: str = '''
 <link href="style.css" rel="stylesheet">
 </head>
 <body>
-<div class='bg-secondary bg-gradient container-sm'>
+<div class='container-sm'>
 '''
 
 webpage = webpageBody
