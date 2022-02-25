@@ -78,9 +78,9 @@ def find(search_list, search_string):
 
 def build_index_links():
     index_page = '''<h1 class='text'>Comic Frame Filter</h1>'''
-    index_page += '<h2 class=\'text-primary\'>Current Image Filter</h2>' + \
-                  '<h3 class=\'text-primary\'>Category: <b>' + find(filterList, displayImageFilter[0])[0] + '</b></h3>' + \
-                  '<h3 class=\'text-primary\'>Value: <b>' + displayImageFilter[1] + '</b></h3>'
+    index_page += '<h2 class=\'text\'>Current Image Filter</h2>' + \
+                  '<h3 class=\'text\'>Category: <b>' + find(filterList, displayImageFilter[0])[0] + '</b></h3>' + \
+                  '<h3 class=\'text\'>Value: <b>' + displayImageFilter[1] + '</b></h3>'
     index_page += '''<ul class='list-group'>'''
     for filterItem in filterList:
         index_page += "<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' " + \
