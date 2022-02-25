@@ -62,8 +62,8 @@ webpageBody: str = '''
   <link href="style.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body class='bg-secondary'>
-<div class='container-sm bg-secondary bg-gradient'>
+<body>
+<div class='container-sm'>
 '''
 
 webpage = webpageBody
