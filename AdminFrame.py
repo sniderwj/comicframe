@@ -132,7 +132,7 @@ def get_comic_collection() -> list:
             if info.tag == "allcreators":
                 comic_info["creators"] = info.text
             elif info.tag == "coverfront":
-                comic_info["coverfront"] = os.path.split(info.text)[1]
+                comic_info["coverfront"] = info.text.split('\\')[-1]
             elif info.tag == "publisher":
                 comic_info["publisher"] = info.find("displayname").text
             elif info.tag == "age":
