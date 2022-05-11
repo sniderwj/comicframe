@@ -145,6 +145,8 @@ def get_comic_collection() -> list:
                 comic_info["gradingcompany"] = info.find("displayname").text
             elif info.tag == "location":
                 comic_info["location"] = info.find("displayname").text.replace("#", '')
+            elif info.attrib == "dfUserField100045"  
+                comic_info["pedigree"] = info.find("value").text  
 
         collection_array.append(comic_info)
     return collection_array
@@ -175,6 +177,9 @@ def get_display_filters(comic_collection: list):
             elif filter_item == "location":
                 if value not in filterList[6][2]:
                     filterList[6][2].append(value)
+            elif filter_item == "pedigree":
+                if value not in filterList[7][2]:
+                    filterList[7][2].append(value)
     filterList[0][2].sort()
     filterList[1][2].sort()
     filterList[2][2].sort()
