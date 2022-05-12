@@ -145,9 +145,9 @@ def get_comic_collection() -> list:
                 comic_info["gradingcompany"] = info.find("displayname").text
             elif info.tag == "location":
                 comic_info["location"] = info.find("displayname").text.replace("#", '')
-            elif info.attrib == "dfUserField100045"  
-                comic_info["pedigree"] = info.find("value").text  
-
+            elif info.tag == "userdefinedvalues":
+                for udf in info.findall("userdefinedvalu[@fieldid='dfUserField100045']"):
+                    comic_info["pedigree"] = udf.find("value").text
         collection_array.append(comic_info)
     return collection_array
 
