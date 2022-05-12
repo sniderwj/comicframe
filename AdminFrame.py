@@ -188,6 +188,7 @@ def get_display_filters(comic_collection: list):
     filterList[4][2].sort()
     filterList[5][2].sort()
     filterList[6][2].sort(key=natural_keys)
+    filterList[7][2].sort()
 
 
 def atoi(text):
@@ -248,7 +249,7 @@ def main():
         print(displayImageFilter)
         global filterList
         print("locations:")
-        print(filterList[6][2])
+        print(filterList[7][2])
         return webpage
 
     app.run(debug=True, host='0.0.0.0')
