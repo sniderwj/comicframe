@@ -19,7 +19,7 @@ filterList = [("Series Group", "seriesgroup", []),
               ("Publishers", "publishers", []),
               ("Comic Age", "age", []),
               ("Grading Company", "gradingcompany", []),
-              ("Location", "location", [])
+              ("Location", "location", []),
               ("Pedigree / Collection", "pedigree", [])]
 
 webpageEnd: str = '''
