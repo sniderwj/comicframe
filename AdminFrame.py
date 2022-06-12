@@ -20,7 +20,8 @@ filterList = [("Series Group", "seriesgroup", []),
               ("Comic Age", "age", []),
               ("Grading Company", "gradingcompany", []),
               ("Location", "location", []),
-              ("Pedigree / Collection", "pedigree", [])]
+              ("Pedigree / Collection", "pedigree", []),
+              ("Tag", "tag", [])]
 
 webpageEnd: str = '''
  </div>
@@ -58,10 +59,12 @@ webpageBody: str = '''
 <html lang='en'>
 <head><title>Comic Frame Filters</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- CSS only -->
+  <link href="static/bootstrap.min.css" rel="stylesheet">
+
+<!-- CSS only
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="style.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+-->
 </head>
 <body>
 <div class='container-sm'>
@@ -98,6 +101,7 @@ def build_webpage_links(selected_filter):
     links = '''<input type="text" class="form-control" id="myInput" onkeyup="searchBarFilter()" ''' \
             + '''placeholder="Search for filters..">'''
     links = "<h1>" + find(filterList, selected_filter)[0] + "</h1><ul id='myUL' class='list-group'>" + links
+
     selected_filter_list = find(filterList, selected_filter)
     for filter_item in selected_filter_list[2]:
         links += "<li class='list-group-item'><a class='btn btn-primary mw-100 w-100'  href='" \
@@ -149,6 +153,9 @@ def get_comic_collection() -> list:
             elif info.tag == "userdefinedvalues":
                 for udf in info.findall("userdefinedvalue[@fieldid='dfUserField100045']"):
                     comic_info["pedigree"] = udf.find("value").text
+            elif info.tag == "tags":
+                for tag in info.findall("*"):
+                    comic_info["tag"] = tag.find("displayname").text
         collection_array.append(comic_info)
     return collection_array
 
@@ -181,6 +188,9 @@ def get_display_filters(comic_collection: list):
             elif filter_item == "pedigree":
                 if value not in filterList[7][2]:
                     filterList[7][2].append(value)
+            elif filter_item == "tag":
+                if value not in filterList[8][2]:
+                    filterList[8][2].append(value)
     filterList[0][2].sort()
     filterList[1][2].sort()
     filterList[2][2].sort()
@@ -189,6 +199,7 @@ def get_display_filters(comic_collection: list):
     filterList[5][2].sort()
     filterList[6][2].sort(key=natural_keys)
     filterList[7][2].sort()
+    filterList[8][2].sort()
 
 
 def atoi(text):
@@ -244,12 +255,14 @@ def main():
 
     @app.route('/debug')
     def debug_route():
-        global displayImageFilter
-        print("displayImage:")
-        print(displayImageFilter)
-        global filterList
-        print("locations:")
-        print(filterList[7][2])
+        collection_xml = XMLTree.parse(config.comicFilePath)
+        collection_array = []
+        for comic in collection_xml.findall("./comiclist/"):
+            comic_info = {}
+            for info in comic.findall("*"):
+                if info.tag == "tags":
+                    for tag in info.findall("*"):
+                        print(tag.find("displayname").text)
         return webpage
 
     app.run(debug=True, host='0.0.0.0')
