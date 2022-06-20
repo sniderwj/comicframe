@@ -8,7 +8,7 @@ I liked the idea of a RPi powered frame where I could upload the scans of my com
 
 ## Requirements
 1. Automatically start  
-2. Parse an export from Comics Collectorz for filter information
+2. Parse an export from Comic Collectorz for filter information
 3. Launch a site that can set filters, changing the images shown
 4. Use Dropbox to copy images and Comic Collectorz export automatically
 
@@ -31,7 +31,7 @@ I liked the idea of a RPi powered frame where I could upload the scans of my com
     1. Read the Comic Collectorz export and build a list of comics, image names, and filter information
        * Filters are: Series, Comic Age, Publisher, and Creators
     2. Initially the text file will have all image file names
-    3. Launches a web site @ http://ipaddress:5000
+    3. Launches a web site at http://ipaddress:5000
 3. The website will:
     1. Give the user a list of filters to select
     2. Selecting a filter category will let you search and select a filter

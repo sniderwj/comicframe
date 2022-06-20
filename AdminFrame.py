@@ -156,6 +156,9 @@ def get_comic_collection() -> list:
             elif info.tag == "tags":
                 for tag in info.findall("*"):
                     comic_info["tag"] = tag.find("displayname").text
+            elif info.tag == "characters":
+                for character in info.findall("character"):
+                    comic.info["character"] = character.find("displayname").file_text
         collection_array.append(comic_info)
     return collection_array
 
@@ -191,6 +194,9 @@ def get_display_filters(comic_collection: list):
             elif filter_item == "tag":
                 if value not in filterList[8][2]:
                     filterList[8][2].append(value)
+            elif filter_item == "character":
+                if value not in filterList[9][2]:
+                    filterList[9][2].append(value)
     filterList[0][2].sort()
     filterList[1][2].sort()
     filterList[2][2].sort()
@@ -200,6 +206,7 @@ def get_display_filters(comic_collection: list):
     filterList[6][2].sort(key=natural_keys)
     filterList[7][2].sort()
     filterList[8][2].sort()
+    filterList[9][2].sort()
 
 
 def atoi(text):
