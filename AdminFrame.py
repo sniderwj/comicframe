@@ -21,7 +21,8 @@ filterList = [("Series Group", "seriesgroup", []),
               ("Grading Company", "gradingcompany", []),
               ("Location", "location", []),
               ("Pedigree / Collection", "pedigree", []),
-              ("Tag", "tag", [])]
+              ("Tag", "tag", []),
+              ("Character", "character", [])]
 
 webpageEnd: str = '''
  </div>
