@@ -147,8 +147,8 @@ def get_comic_collection() -> list:
                 comic_info["seriesgroup"] = info.find("displayname").text
             elif info.tag == "mainsection":
                 comic_info["series"] = info.find("series/displayname").text
-                for character in info.findall("characters"):
-                    comic_info["character"] = character.find("displayname").file_text
+                for character in info.findall("characters/character"):
+                    comic_info["character"] = character.find("displayname").text
             elif info.tag == "gradingcompany":
                 comic_info["gradingcompany"] = info.find("displayname").text
             elif info.tag == "location":
