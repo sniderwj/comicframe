@@ -22,7 +22,9 @@ filterList = [("Series Group", "seriesgroup", []),
               ("Location", "location", []),
               ("Pedigree / Collection", "pedigree", []),
               ("Tag", "tag", []),
-              ("Character", "character", [])]
+              ("Character", "character", []),
+              ("Crossover", "crossover", []),
+              ("Story Arc", "storyarc", [])]
 
 webpageEnd: str = '''
  </div>
@@ -165,6 +167,10 @@ def get_comic_collection() -> list:
             elif info.tag == "characters":
                 for character in info.findall("*"):
                     comic.info["character"] = character.find("displayname").file_text
+            elif info.tag == "crossover":
+                comic_info["crossover"] = info.find("displayname").text
+            elif info.tag == "storyarc":
+                comic_info["storyarc"] = info.find("displayname").text
         collection_array.append(comic_info)
     return collection_array
 
@@ -203,6 +209,12 @@ def get_display_filters(comic_collection: list):
             elif filter_item == "character":
                 if value not in filterList[9][2]:
                     filterList[9][2].append(value)
+            elif filter_item == "crossover":
+                if value not in filterList[10][2]:
+                    filterList[10][2].append(value)
+            elif filter_item == "storyarc":
+                if value not in filterList[11][2]:
+                    filterList[11][2].append(value)
     filterList[0][2].sort()
     filterList[1][2].sort()
     filterList[2][2].sort()
@@ -213,7 +225,8 @@ def get_display_filters(comic_collection: list):
     filterList[7][2].sort()
     filterList[8][2].sort()
     filterList[9][2].sort()
-
+    filterList[10][2].sort()
+    filterList[11][2].sort()
 
 def atoi(text):
     return int(text) if text.isdigit() else text
