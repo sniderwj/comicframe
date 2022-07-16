@@ -91,15 +91,15 @@ def build_index_links():
     index_page += '<h2 class=\'text\'>Current Image Filter</h2>' + \
                   '<h3 class=\'text\'>Category: <b>' + find(filterList, displayImageFilter[0])[0] + '</b></h3>' + \
                   '<h3 class=\'text\'>Value: <b>' + displayImageFilter[1] + '</b></h3>'
-    index_page += '''<ul class='list-group'>'''
+    index_page += '''<div class='list-group'>'''
     for filterItem in filterList:
-        index_page += "<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' " + \
-                     "href='" + filterItem[1] + "'>" + filterItem[0] + "</a></li>"
-    index_page += '''<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' ''' + \
-                  '''href='resetFilter'>Reset Filter</a></li>'''
-    index_page += '''<li class='list-group-item'><a class='btn btn-primary mw-100 w-100' ''' + \
-                  '''href='rebuildFilter'>Rebuild Filter</a></li>'''
-    index_page += '</ul>'
+        index_page += "<a class='list-group-item list-group-item-action btn btn-primary mw-100 w-100' " + \
+                     "href='" + filterItem[1] + "'>" + filterItem[0] + "</a>"
+    index_page += '''<a class='list-group-item list-group-item-action btn btn-primary mw-100 w-100' ''' + \
+                  '''href='resetFilter'>Reset Filter</a>'''
+    index_page += '''<a class='list-group-item list-group-item-action btn btn-primary mw-100 w-100' ''' + \
+                  '''href='rebuildFilter'>Rebuild Filter</a>'''
+    index_page += '</div>'
     return index_page
 
 
