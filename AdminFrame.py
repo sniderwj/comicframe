@@ -36,6 +36,16 @@ webpageEnd: str = '''
  + '''crossorigin="anonymous"></script>
 <!-- JavaScript Bundle with Popper -->
 <script>
+    $(document).ready(function() {
+        $(".btn").click(function() {
+            $(this).prop("disabled", true);
+            $(this).html(
+             '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>'
+            );
+        });
+    });
+</script>
+<script>
     function searchBarFilter() {
         var input, filter, ul, li, a, i, txtValue;
         input = document.getElementById("myInput");
